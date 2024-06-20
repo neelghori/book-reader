@@ -5,6 +5,7 @@ import Loader from "../UI/Icons/Loader";
 import Input from "../UI/Input";
 import Dialog from "./Dialog";
 
+// This modal is used for adding and updating book details.
 const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
   const { formik } = useBook(props?.open, props?.setOpen);
   const {

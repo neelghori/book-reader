@@ -3,6 +3,7 @@ import Close from "../UI/Icons/CloseIcon";
 import { ModalProps } from "../../Types/components/Modal/Modal";
 import { StateModalProps } from "../../Types/components/Modal/AddEditDialog";
 
+//common dialog box to reuse when we need to show popup.
 const Dialog: React.FC<ModalProps<StateModalProps>> = (props) => {
   return (
     <dialog

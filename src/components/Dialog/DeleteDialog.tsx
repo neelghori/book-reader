@@ -6,6 +6,7 @@ import Dialog from "./Dialog";
 import { BookContextProvider } from "../../Context/BookContext";
 import { ReducerActionType } from "../../Types/Context/BookReducer";
 
+// This is Delete Dialog box it will popup when we click on delete button from list of book
 const DeleteDialog: React.FC<DeleteDialogProps> = (props) => {
   const { dispatch } = useContext(BookContextProvider);
   const closeModal = () => {

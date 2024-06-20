@@ -1,5 +1,6 @@
 import LoginSideImage from "../../assets/images/login.jpg";
 
+//common image sidebar for login and register page.
 const CommonImageSidebar = () => {
   return (
     <div className="relative hidden md:block">

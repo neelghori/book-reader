@@ -8,6 +8,7 @@ export const AuthContextProvider = createContext<{
   setIsAuth: () => {},
 });
 
+// auth context for authetication.
 const AuthContext: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {

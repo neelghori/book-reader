@@ -1,6 +1,8 @@
 import React from "react";
 import { HeadingProps } from "../../Types/components/UI/Heading";
 
+//common heading element component h1,h2,h3
+
 const Heading: React.FC<HeadingProps> = (props) => {
   switch (props.heading) {
     case "h1":

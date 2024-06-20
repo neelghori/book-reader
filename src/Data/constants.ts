@@ -1,3 +1,4 @@
+// Dummy data for book listing
 export const DummyBookData = [
   {
     title: "To Kill a Mockingbird",
@@ -344,6 +345,7 @@ export const DummyBookData = [
   },
 ];
 
+//data of table heading
 export const TableHeading = [
   {
     title: "Book Title",

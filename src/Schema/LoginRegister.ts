@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+
+//validation schema for login and register
 export const GetValidationSchema = (key: string) => {
   switch (key) {
     case "login":
@@ -28,6 +30,8 @@ export const GetValidationSchema = (key: string) => {
       return null;
   }
 };
+
+//validation schema for adding and editing book details
 
 export const getBookSchema = () => {
   return Yup.object().shape({

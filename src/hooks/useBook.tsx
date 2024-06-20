@@ -5,6 +5,7 @@ import { BookProps, ReducerActionType } from "../Types/Context/BookReducer";
 import { getBookSchema } from "../Schema/LoginRegister";
 import { AddEditDialogProps } from "../Types/components/Modal/AddEditDialog";
 
+//common hook for book adding and editing
 const useBook = (
   open: AddEditDialogProps["open"],
   setOpen: AddEditDialogProps["setOpen"]

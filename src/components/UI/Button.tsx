@@ -1,6 +1,7 @@
 import React from "react";
 import { ButtonProps } from "../../Types/components/UI/Button";
 
+//common button element component
 const Button: React.FC<ButtonProps> = (props) => {
   return (
     <button

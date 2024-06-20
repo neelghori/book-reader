@@ -6,12 +6,10 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  // <React.StrictMode>
   <BrowserRouter>
     <Toaster richColors position="top-right" />
     <Store>
       <App />
     </Store>
   </BrowserRouter>
-  // </React.StrictMode>
 );

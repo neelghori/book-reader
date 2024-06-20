@@ -5,6 +5,7 @@ import {
 import ChevronLeftIcon from "../UI/Icons/ChevronLeftIcon";
 import ChevronRightIcon from "../UI/Icons/ChevronRightIcon";
 
+//pagination common component
 const Pagination: React.FC<PaginationMainprops> = (props) => {
   const pageNumbers = [];
 

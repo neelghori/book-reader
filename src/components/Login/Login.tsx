@@ -6,6 +6,7 @@ import Heading from "../UI/Heading";
 import Input from "../UI/Input";
 import Logo from "../UI/Logo";
 
+//login common component
 export default function LoginComp() {
   const { formik } = useLoginRegister(true);
   const { handleBlur, handleChange, handleSubmit, touched, values, errors } =

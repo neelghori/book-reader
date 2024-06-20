@@ -8,10 +8,10 @@ import { useHistory } from "react-router-dom";
 import { getLocalStorageData } from "../utils/helper";
 import { AuthContextProvider } from "../Context/AuthContext";
 
+//formik custom hook to manage the login and register in one.
 const useLoginRegister = (isLogin: boolean) => {
   const { dispatch } = useContext(BookContextProvider);
   const { setIsAuth } = useContext(AuthContextProvider);
-
   const history = useHistory();
   const formik = useFormik({
     initialValues: {

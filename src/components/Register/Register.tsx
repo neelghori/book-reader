@@ -10,6 +10,7 @@ const Register = () => {
   const { handleChange, handleSubmit, handleBlur, values, errors, touched } =
     formik;
 
+  //Register common components
   return (
     <div className="grid grid-cols-2 min-h-screen">
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">

@@ -1,6 +1,8 @@
 import React from "react";
 import { InputProps } from "../../Types/components/UI/Input";
 
+//common input element component
+
 const Input: React.FC<InputProps> = (props) => {
   return (
     <div>

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { BookContextProvider } from "../Context/BookContext";
 
+//common pagination hook for passing the value used in pagination.
 const usePagination = () => {
   const { state } = useContext(BookContextProvider);
   const [currentPage, setCurrentPage] = useState(1);

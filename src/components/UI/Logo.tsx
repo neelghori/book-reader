@@ -1,5 +1,7 @@
 import LogoFile from "../../assets/images/logo.svg";
 
+//common logo component
+
 const Logo = () => {
   return (
     <div className="flex justify-center">

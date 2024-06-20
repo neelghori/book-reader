@@ -7,6 +7,8 @@ import { BookContextProvider } from "../../Context/BookContext";
 import { ReducerActionType } from "../../Types/Context/BookReducer";
 import Logo from "../UI/Logo";
 import { AuthContextProvider } from "../../Context/AuthContext";
+
+// sidebar in dashboard component which show menu.
 const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
   const { dispatch } = useContext(BookContextProvider);
   const { setIsAuth } = useContext(AuthContextProvider);

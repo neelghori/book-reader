@@ -1,4 +1,3 @@
-import "./App.css";
 import LoginComp from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -10,18 +9,11 @@ function App() {
   const { isAuth } = useContext(AuthContextProvider);
 
   return (
-    <>
-      <Router>
-        <Route exact path="/register" children={<Register />} />
-
-        <Route
-          exact
-          path="/"
-          children={isAuth ? <Dashboard /> : <LoginComp />}
-        />
-        <Route exact path="/login" children={<LoginComp />} />
-      </Router>
-    </>
+    <Router>
+      <Route exact path="/register" children={<Register />} />
+      <Route exact path="/" children={isAuth ? <Dashboard /> : <LoginComp />} />
+      <Route exact path="/login" children={<LoginComp />} />
+    </Router>
   );
 }
 

@@ -12,6 +12,7 @@ import {
 import { SetLocalStorage, getLocalStorageData } from "../utils/helper";
 import { DummyBookData } from "../Data/constants";
 
+//initialvalue for context api
 export const initialValue: InitialValueProps = {
   user_data: [
     {
@@ -26,6 +27,7 @@ export const initialValue: InitialValueProps = {
   book: DummyBookData,
 };
 
+//reducer function for handling all login,register,adding book,editbook,delete book,setting initialvalue
 const ReducerFunction = (
   state: InitialValueProps,
   action: BookReducerAction

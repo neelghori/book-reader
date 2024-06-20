@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import usePagination from "../../hooks/usePagination";
 import { TableHeading } from "../../Data/constants";
 
+// this component is shown in dashboard the list of book list in table format.
 export default function TableContainer() {
   const { dispatch } = useContext(BookContextProvider);
   const [sortBy, setSortby] = useState({
