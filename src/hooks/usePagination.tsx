@@ -14,6 +14,7 @@ const usePagination = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = state?.book?.slice(indexOfFirstItem, indexOfLastItem);
 
+  //handle change function for changing pagenumber
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };

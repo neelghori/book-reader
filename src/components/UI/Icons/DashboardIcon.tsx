@@ -5,7 +5,7 @@ const DashboardIcon = () => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="currentColor"
+      stroke="rgb(37 99 235)"
       className="size-5"
     >
       <path

@@ -5,9 +5,12 @@ import MenuBar from "../UI/Icons/MenuBar";
 import { useContext } from "react";
 import { BookContextProvider } from "../../Context/BookContext";
 import { ReducerActionType } from "../../Types/Context/BookReducer";
-
+import Logo from "../UI/Logo";
+import { AuthContextProvider } from "../../Context/AuthContext";
 const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
   const { dispatch } = useContext(BookContextProvider);
+  const { setIsAuth } = useContext(AuthContextProvider);
+
   const history = useHistory();
   const menuItem = [
     {
@@ -19,6 +22,7 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
       label: "Log Out",
       href: "/",
       function: () => {
+        setIsAuth(false);
         dispatch({ type: ReducerActionType.LOGOUT });
         history.push("/login");
       },
@@ -30,9 +34,6 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
       <div className="flex flex-row">
         <div>
           <button
-            data-drawer-target="default-sidebar"
-            data-drawer-toggle="default-sidebar"
-            aria-controls="default-sidebar"
             type="button"
             className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           >
@@ -42,13 +43,10 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
 
           <aside
             id="default-sidebar"
-            className=" z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-            aria-label="Sidebar"
+            className="z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
           >
-            {/* <div>
-          <img src={"./"} alt="logo" width={100} height={100} />
-        </div> */}
             <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+              <Logo />
               <ul className="space-y-2 font-medium">
                 {menuItem &&
                   menuItem.length > 0 &&
@@ -58,7 +56,7 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
                         {element?.function ? (
                           <p
                             onClick={element.function}
-                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            className="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                           >
                             {" "}
                             {element?.icon}

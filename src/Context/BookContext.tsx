@@ -5,7 +5,6 @@ import {
   BookReducerAction,
   InitialValueProps,
 } from "../Types/Context/BookReducer";
-import { useHistory } from "react-router-dom";
 
 export const BookContextProvider = React.createContext<BookCreateContextProps>({
   state: initialValue,
@@ -13,10 +12,9 @@ export const BookContextProvider = React.createContext<BookCreateContextProps>({
 });
 
 const BookContext: React.FC<{ children: React.ReactNode }> = (props) => {
-  const history = useHistory();
   const [state, dispatch] = useReducer(
     (state: InitialValueProps, action: BookReducerAction) => {
-      return ReducerFunction(state, action, history);
+      return ReducerFunction(state, action);
     },
     initialValue
   );

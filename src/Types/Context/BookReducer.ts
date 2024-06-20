@@ -5,6 +5,7 @@ export interface InitialValueProps {
   book: BookProps[];
   error?: boolean;
   loginUser?: UserDataProps;
+  isAuth?: boolean;
 }
 
 export interface BookProps {

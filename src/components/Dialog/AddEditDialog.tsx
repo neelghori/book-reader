@@ -7,7 +7,15 @@ import Dialog from "./Dialog";
 
 const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
   const { formik } = useBook(props?.open, props?.setOpen);
-  const { handleChange, values, errors, handleSubmit, isSubmitting } = formik;
+  const {
+    handleChange,
+    values,
+    errors,
+    handleSubmit,
+    handleBlur,
+    touched,
+    isSubmitting,
+  } = formik;
   return (
     <Dialog
       setOpen={props?.setOpen}
@@ -31,6 +39,8 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               value={values.title}
               onChange={handleChange}
               error={errors.title}
+              onBlur={handleBlur}
+              touched={touched.title}
             />
             <Input
               type="text"
@@ -40,6 +50,8 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               placeholder="Enter Author Name"
               onChange={handleChange}
               error={errors.author}
+              onBlur={handleBlur}
+              touched={touched.author}
             />
             <Input
               type="number"
@@ -51,6 +63,8 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               placeholder="Enter Publish Year"
               onChange={handleChange}
               error={errors.publication_year}
+              onBlur={handleBlur}
+              touched={touched.publication_year}
             />
             <Input
               type="text"
@@ -60,6 +74,8 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               placeholder="Enter Genre"
               onChange={handleChange}
               error={errors.genre}
+              onBlur={handleBlur}
+              touched={touched.genre}
             />
           </div>
           <div className="">

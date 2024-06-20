@@ -4,17 +4,20 @@ import CommonImageSidebar from "../CommonImageSidebar/CommonImageSidebar";
 import Button from "../UI/Button";
 import Heading from "../UI/Heading";
 import Input from "../UI/Input";
+import Logo from "../UI/Logo";
 
 export default function LoginComp() {
   const { formik } = useLoginRegister(true);
-  const { handleBlur, handleChange, handleSubmit, values, errors } = formik;
+  const { handleBlur, handleChange, handleSubmit, touched, values, errors } =
+    formik;
   return (
     <>
-      <div className="grid grid-cols-2 min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
         <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
+            <Logo />
             <div>
-              <Heading heading="h2">Login In</Heading>
+              <Heading heading="h2">Log In</Heading>
             </div>
 
             <div className="mt-8">
@@ -32,6 +35,7 @@ export default function LoginComp() {
                     value={values?.email}
                     error={errors.email}
                     onBlur={handleBlur}
+                    touched={touched.email}
                   />
                   <Input
                     type="password"
@@ -41,6 +45,7 @@ export default function LoginComp() {
                     value={values?.password}
                     error={errors.password}
                     onBlur={handleBlur}
+                    touched={touched.password}
                   />
                   <div>
                     <Link to="/register">

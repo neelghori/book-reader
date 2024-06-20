@@ -21,21 +21,23 @@ export const initialValue: InitialValueProps = {
       token: "",
     },
   ],
+  isAuth: false,
   error: false,
   book: DummyBookData,
 };
 
 const ReducerFunction = (
   state: InitialValueProps,
-  action: BookReducerAction,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  history: any
+  action: BookReducerAction
 ): InitialValueProps => {
   const { type, payload } = action;
+  const getRegister = getLocalStorageData("bookData");
+
   switch (type) {
+    //user register case
     case ReducerActionType.REGISTER:
-      const getRegister = getLocalStorageData("bookData");
-      const stateDuplicate = getRegister ? [...getRegister.user_data] : [];
+      const stateDuplicate =
+        getRegister && getRegister?.user_data ? [...getRegister.user_data] : [];
       const isExist =
         stateDuplicate &&
         stateDuplicate.length > 0 &&
@@ -54,12 +56,12 @@ const ReducerFunction = (
       };
       SetLocalStorage("bookData", state);
       toast.success("Account Created SuccessFully");
-      history.push("/login");
       return state;
+
+    //user login case
     case ReducerActionType.LOGIN:
-      const getLocalData = getLocalStorageData("bookData");
-      const stateDuplicateForLogin = getLocalData
-        ? [...getLocalData.user_data]
+      const stateDuplicateForLogin = getRegister
+        ? [...getRegister.user_data]
         : [];
       const findUserExist =
         stateDuplicateForLogin &&
@@ -71,23 +73,29 @@ const ReducerFunction = (
         );
       if (!findUserExist) {
         toast.error("Invalid Email or Password");
+        state = {
+          ...getRegister,
+        };
         SetLocalStorage("bookData", state);
         return state;
       }
       state = {
         ...state,
+        user_data: getRegister?.user_data,
         loginUser: payload as UserDataProps,
+        isAuth: true,
       };
       SetLocalStorage("bookData", state);
       toast.success("Login Success");
-      history.push("/");
       return state;
 
+    //set initialValue in state
     case ReducerActionType.SETINITIALVALUE:
       return initialValue;
+
+    //Add book in state and localstorage
     case ReducerActionType.ADDBOOK:
-      const bookDataLocal = getLocalStorageData("bookData");
-      const DuplicateArray = bookDataLocal ? [...bookDataLocal.book] : [];
+      const DuplicateArray = getRegister ? [...getRegister.book] : [];
       DuplicateArray.push(payload);
       state = {
         ...state,
@@ -95,11 +103,10 @@ const ReducerFunction = (
       };
       SetLocalStorage("bookData", state);
       return state;
+
+    //Add Editbook in state and localstorage
     case ReducerActionType.EDITBOOK:
-      const bookEditDataLocal = getLocalStorageData("bookData");
-      const DuplicatEditBookData = bookEditDataLocal
-        ? [...bookEditDataLocal.book]
-        : [];
+      const DuplicatEditBookData = getRegister ? [...getRegister.book] : [];
       const FindThatExist =
         DuplicatEditBookData &&
         DuplicatEditBookData.length > 0 &&
@@ -122,11 +129,10 @@ const ReducerFunction = (
         return state;
       }
       return state;
+
+    //Delete book in state and localstorage
     case ReducerActionType.DELETEBOOK:
-      const bookDeleteLocal = getLocalStorageData("bookData");
-      const DuplicatDeletebook = bookDeleteLocal
-        ? [...bookDeleteLocal.book]
-        : [];
+      const DuplicatDeletebook = getRegister ? [...getRegister.book] : [];
       state = {
         ...state,
         book: DuplicatDeletebook.filter(
@@ -135,28 +141,34 @@ const ReducerFunction = (
       };
       SetLocalStorage("bookData", state);
       return state;
+
+    //Get List data from localstorage
     case ReducerActionType.GETLISTDATA:
-      const getLocalStorages = getLocalStorageData("bookData");
-      state = getLocalStorages
-        ? getLocalStorages && getLocalStorages?.book?.length > 0
+      state = getRegister
+        ? getRegister && getRegister?.book?.length > 0
           ? {
-              ...getLocalStorages,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              book: getLocalStorages.book.sort((a: any, b: any) => b.id - a.id),
+              ...getRegister,
+              book: getRegister.book.sort(
+                (a: { [x: string]: number }, b: { [x: string]: number }) =>
+                  b.id - a.id
+              ),
             }
           : initialValue
         : initialValue;
       return state;
+
+    //Set List book in localstorage
     case ReducerActionType.SETLISTDATA:
       SetLocalStorage("bookData", state);
       return state;
+
+    //Sort field wise table logic
     case ReducerActionType.SORTTABLEDATA:
-      const getSortLocalData = getLocalStorageData("bookData");
       state = {
         ...state,
         book:
-          getSortLocalData?.book && getSortLocalData?.book.length > 0
-            ? getSortLocalData?.book.sort(
+          getRegister?.book && getRegister?.book.length > 0
+            ? getRegister?.book.sort(
                 (a: { [x: string]: number }, b: { [x: string]: number }) => {
                   if ((payload as SortbyProps)?.orderbyAsc == "desc") {
                     return a[`${(payload as SortbyProps)?.field}`] <
@@ -182,8 +194,14 @@ const ReducerFunction = (
       };
       SetLocalStorage("bookData", state);
       return state;
+
+    //Logout User
     case ReducerActionType.LOGOUT:
-      state.loginUser = initialValue.user_data[0];
+      state = {
+        ...state,
+        isAuth: false,
+        loginUser: initialValue.user_data[0],
+      };
       SetLocalStorage("bookData", state);
       return state;
     default:

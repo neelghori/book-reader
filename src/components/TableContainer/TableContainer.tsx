@@ -76,8 +76,7 @@ export default function TableContainer() {
                                 payload: {
                                   field: element.value,
                                   orderbyAsc: sortBy.orderbyAsc,
-                                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                } as any,
+                                },
                               });
                               setSortby({
                                 field: element.value,

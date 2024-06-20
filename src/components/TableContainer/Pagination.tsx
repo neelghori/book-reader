@@ -1,8 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import {
   PaginationButtonProps,
   PaginationMainprops,
 } from "../../Types/components/TableContainer/Pagination";
+import ChevronLeftIcon from "../UI/Icons/ChevronLeftIcon";
+import ChevronRightIcon from "../UI/Icons/ChevronRightIcon";
 
 const Pagination: React.FC<PaginationMainprops> = (props) => {
   const pageNumbers = [];
@@ -13,10 +14,7 @@ const Pagination: React.FC<PaginationMainprops> = (props) => {
   return (
     <div className=" py-4 flex items-center justify-end w-full">
       <div>
-        <nav
-          className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-          aria-label="Pagination"
-        >
+        <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm">
           <PaginationButton
             title="Previous"
             onClick={() => {
@@ -26,19 +24,13 @@ const Pagination: React.FC<PaginationMainprops> = (props) => {
                 props?.onPageChange(props?.currentPage - 1);
               }
             }}
-            icon={
-              <ChevronLeftIcon
-                className="h-5 w-5 cursor-pointer"
-                aria-hidden="true"
-              />
-            }
+            icon={<ChevronLeftIcon className="h-5 w-5 cursor-pointer" />}
           />
           {pageNumbers.map((number, index) => {
             return (
               <p
                 key={index}
                 onClick={() => props?.onPageChange(number)}
-                aria-current="page"
                 className={`cursor-pointer relative z-10 inline-flex items-center ${
                   number == props?.currentPage
                     ? "bg-blue-600 text-white"
@@ -58,12 +50,7 @@ const Pagination: React.FC<PaginationMainprops> = (props) => {
                 props?.onPageChange(props?.currentPage + 1);
               }
             }}
-            icon={
-              <ChevronRightIcon
-                className="h-5 w-5 cursor-pointer"
-                aria-hidden="true"
-              />
-            }
+            icon={<ChevronRightIcon className="h-5 w-5 cursor-pointer" />}
           />
         </nav>
       </div>

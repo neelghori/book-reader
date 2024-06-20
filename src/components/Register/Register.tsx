@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   const { formik } = useLoginRegister(false);
-  const { handleChange, handleSubmit, values, errors } = formik;
+  const { handleChange, handleSubmit, handleBlur, values, errors, touched } =
+    formik;
 
   return (
     <div className="grid grid-cols-2 min-h-screen">
@@ -27,6 +28,8 @@ const Register = () => {
                   onChange={handleChange}
                   value={values.name}
                   error={errors.name}
+                  touched={touched.name}
+                  onBlur={handleBlur}
                 />
                 <Input
                   type="text"
@@ -36,6 +39,8 @@ const Register = () => {
                   onChange={handleChange}
                   value={values.email}
                   error={errors.email}
+                  touched={touched.email}
+                  onBlur={handleBlur}
                 />
                 <Input
                   type="password"
@@ -45,6 +50,8 @@ const Register = () => {
                   onChange={handleChange}
                   value={values.password}
                   error={errors.password}
+                  onBlur={handleBlur}
+                  touched={touched.password}
                 />
                 <div>
                   <Link to="/login">
