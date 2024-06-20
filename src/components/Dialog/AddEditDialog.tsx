@@ -6,7 +6,7 @@ import Input from "../UI/Input";
 import Dialog from "./Dialog";
 
 const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
-  const { formik } = useBook(props?.open);
+  const { formik } = useBook(props?.open, props?.setOpen);
   const { handleChange, values, errors, handleSubmit, isSubmitting } = formik;
   return (
     <Dialog
@@ -46,7 +46,7 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               id="publication_year"
               label="Publish Year"
               max={2024}
-              classNames="pr-2"
+              classnames="pr-2"
               value={values.publication_year}
               placeholder="Enter Publish Year"
               onChange={handleChange}
@@ -64,11 +64,17 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
           </div>
           <div className="">
             <Button
-              classNames="!px-4 !py-3"
+              classnames="!px-4 !py-3"
               disabled={isSubmitting}
               type="submit"
             >
-              {isSubmitting ? <Loader /> : "Add Book"}
+              {isSubmitting ? (
+                <Loader />
+              ) : props?.open?.modal == "Edit" ? (
+                "Edit book"
+              ) : (
+                "Add Book"
+              )}
             </Button>
           </div>
         </div>

@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddEditDialog from "../Dialog/AddEditDialog";
 import Button from "../UI/Button";
 import Heading from "../UI/Heading";
-
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-];
+import { BookContextProvider } from "../../Context/BookContext";
+import { ReducerActionType } from "../../Types/Context/BookReducer";
+import DeleteDialog from "../Dialog/DeleteDialog";
+import Pagination from "./Pagination";
+import usePagination from "../../hooks/usePagination";
+import { TableHeading } from "../../Data/constants";
 
 export default function TableContainer() {
+  const { dispatch } = useContext(BookContextProvider);
+  const [sortBy, setSortby] = useState({
+    field: "",
+    orderbyAsc: "",
+  });
+  const { currentItems, currentPage, totalPages, handlePageChange } =
+    usePagination();
   const [open, setOpen] = useState({
     modal: "Add",
     modalStatus: false,
@@ -23,13 +27,17 @@ export default function TableContainer() {
       genre: "",
     },
   });
+
+  useEffect(() => {
+    dispatch({ type: ReducerActionType.GETLISTDATA });
+  }, []);
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8 mt-10 w-full">
         <div className="flex justify-between items-center">
           <Heading
             heading="h2"
-            classNames="text-3xl font-semibold leading-6 !mt-0 text-gray-900"
+            classnames="text-3xl font-semibold leading-6 !mt-0 text-gray-900"
           >
             Book List
           </Heading>
@@ -38,6 +46,7 @@ export default function TableContainer() {
               onClick={() => {
                 setOpen({
                   ...open,
+                  modal: "Add",
                   modalStatus: !open?.modalStatus,
                 });
               }}
@@ -51,82 +60,146 @@ export default function TableContainer() {
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Title
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                    >
-                      Action
-                    </th>
+                  <tr className="">
+                    {TableHeading.map((element, index) => {
+                      return (
+                        <th
+                          key={index}
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          <div
+                            className="flex gap-2 cursor-pointer"
+                            onClick={() => {
+                              dispatch({
+                                type: ReducerActionType.SORTTABLEDATA,
+                                payload: {
+                                  field: element.value,
+                                  orderbyAsc: sortBy.orderbyAsc,
+                                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                } as any,
+                              });
+                              setSortby({
+                                field: element.value,
+                                orderbyAsc:
+                                  sortBy?.orderbyAsc == "asc" ? "desc" : "asc",
+                              });
+                            }}
+                          >
+                            <span>{element.title}</span>
+                            {element.value !== "id" ? (
+                              <span>
+                                {sortBy.field == element.value &&
+                                sortBy?.orderbyAsc ==
+                                  "" ? null : sortBy.field == element.value &&
+                                  sortBy?.orderbyAsc == "asc" ? (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="size-4"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M8.25 6.75 12 3m0 0 3.75 3.75M12 3v18"
+                                    />
+                                  </svg>
+                                ) : (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="size-4"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M15.75 17.25 12 21m0 0-3.75-3.75M12 21V3"
+                                    />
+                                  </svg>
+                                )}
+                              </span>
+                            ) : null}
+                          </div>
+                        </th>
+                      );
+                    })}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {people.map((person) => (
-                    <tr key={person.email}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                        {person.name}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.title}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.email}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.role}
-                      </td>
-                      <td className="flex justify-end gap-2  py-4 pr-4 text-right text-sm font-medium ">
-                        <a
-                          href="#"
-                          className="text-blue-600 px-5 py-2 rounded-md border border-blue-600 hover:text-blue-600"
-                        >
-                          Edit
-                        </a>
-                        <a
-                          href="#"
-                          className="text-red-600 px-5 py-2 rounded-md border border-red-600 hover:text-red-600"
-                        >
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                  {currentItems &&
+                    currentItems.length > 0 &&
+                    currentItems.map((book, index) => (
+                      <tr key={index}>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {book.title}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {book.author}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {book.publication_year}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {book.genre}
+                        </td>
+                        <td className="flex justify-end gap-2  py-4 pr-4 text-right text-sm font-medium ">
+                          <Button
+                            onClick={() => {
+                              setOpen({
+                                ...open,
+                                editData: book,
+                                modalStatus: !open?.modalStatus,
+                                modal: "Edit",
+                              });
+                            }}
+                            classnames="!text-blue-600 !px-0 !py-2 rounded-md border border-blue-600 !bg-transparent hover:text-blue-600"
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              setOpen({
+                                ...open,
+                                modal: "Delete",
+                                editData: book,
+                                modalStatus: !open?.modalStatus,
+                              });
+                            }}
+                            classnames="!text-red-600 !px-0 !py-2 rounded-md border !border-red-600 !bg-transparent !hover:text-red-600"
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
+                {/* <tfoot>
+                </tfoot> */}
               </table>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>
       </div>
-      <AddEditDialog
-        title={open?.modal == "Edit" ? "Edit Book" : "Add Book"}
-        setOpen={setOpen}
-        open={open}
-        on
-      />
+      {open?.modal == "Add" || open?.modal == "Edit" ? (
+        <AddEditDialog
+          title={open?.modal == "Edit" ? "Edit Book" : "Add Book"}
+          setOpen={setOpen}
+          open={open}
+        />
+      ) : (
+        <DeleteDialog open={open} setOpen={setOpen} />
+      )}
     </>
   );
 }

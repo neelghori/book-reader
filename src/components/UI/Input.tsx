@@ -16,7 +16,7 @@ const Input: React.FC<InputProps> = (props) => {
         <input
           {...props}
           className={`block w-full pl-3 rounded-md border-0 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 ${
-            props.classNames ?? ""
+            props.classnames ?? ""
           } ${
             props.error
               ? "ring-red-600 placeholder:text-red-600"

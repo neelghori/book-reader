@@ -1,18 +1,27 @@
-import TableContainer from "../TableContainer/TableContainer";
+import { Link, useHistory } from "react-router-dom";
 import DashboardIcon from "../UI/Icons/DashboardIcon";
 import LogOutIcon from "../UI/Icons/LogOut";
 import MenuBar from "../UI/Icons/MenuBar";
+import { useContext } from "react";
+import { BookContextProvider } from "../../Context/BookContext";
+import { ReducerActionType } from "../../Types/Context/BookReducer";
 
-const Sidebar = () => {
+const Sidebar: React.FC<{ children: React.ReactNode }> = (props) => {
+  const { dispatch } = useContext(BookContextProvider);
+  const history = useHistory();
   const menuItem = [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/",
       icon: <DashboardIcon />,
     },
     {
       label: "Log Out",
-      href: "/dashboard",
+      href: "/",
+      function: () => {
+        dispatch({ type: ReducerActionType.LOGOUT });
+        history.push("/login");
+      },
       icon: <LogOutIcon />,
     },
   ];
@@ -43,16 +52,27 @@ const Sidebar = () => {
               <ul className="space-y-2 font-medium">
                 {menuItem &&
                   menuItem.length > 0 &&
-                  menuItem.map((element) => {
+                  menuItem.map((element, index) => {
                     return (
-                      <li>
-                        <a
-                          href="#"
-                          className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                          {element?.icon}
-                          <span className="ms-3">{element?.label}</span>
-                        </a>
+                      <li key={index}>
+                        {element?.function ? (
+                          <p
+                            onClick={element.function}
+                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                          >
+                            {" "}
+                            {element?.icon}
+                            <span className="ms-3">{element?.label}</span>
+                          </p>
+                        ) : (
+                          <Link
+                            to={element.href}
+                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                          >
+                            {element?.icon}
+                            <span className="ms-3">{element?.label}</span>
+                          </Link>
+                        )}
                       </li>
                     );
                   })}
@@ -60,9 +80,7 @@ const Sidebar = () => {
             </div>
           </aside>
         </div>
-        <div className="flex w-full pr-10">
-          <TableContainer />
-        </div>
+        {props.children}
       </div>
     </>
   );

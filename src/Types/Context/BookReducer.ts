@@ -12,6 +12,7 @@ export interface BookProps {
   author: string;
   publication_year: string;
   genre: string;
+  id?: string;
 }
 
 export interface UserDataProps {
@@ -25,12 +26,23 @@ export enum ReducerActionType {
   REGISTER = "register",
   LOGIN = "login",
   ADDBOOK = "add_book",
+  EDITBOOK = "edit_book",
+  DELETEBOOK = "delete_book",
   SETINITIALVALUE = "set_initialValue",
+  GETLISTDATA = "get_list_data",
+  SETLISTDATA = "set_local_data",
+  SORTTABLEDATA = "sort_local_data",
+  LOGOUT = "logout",
 }
-export type PayloadProps = UserDataProps | BookProps;
+export type PayloadProps = UserDataProps | BookProps | SortbyProps;
 export interface BookReducerAction {
   type: ReducerActionType;
   payload?: PayloadProps;
+}
+
+export interface SortbyProps {
+  field: string;
+  orderbyAsc: string;
 }
 
 export interface BookCreateContextProps {

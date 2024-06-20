@@ -9,7 +9,7 @@ const Heading: React.FC<HeadingProps> = (props) => {
       return (
         <h2
           className={`mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900 ${
-            props.classNames ?? ""
+            props.classnames ?? ""
           } `}
           {...props}
         >
