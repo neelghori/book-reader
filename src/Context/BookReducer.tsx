@@ -10,22 +10,9 @@ import {
 } from "../Types/Context/BookReducer";
 
 import { SetLocalStorage, getLocalStorageData } from "../utils/helper";
-import { DummyBookData } from "../Data/constants";
+import { initialValue } from "../Data/constants";
 
 //initialvalue for context api
-export const initialValue: InitialValueProps = {
-  user_data: [
-    {
-      name: "",
-      email: "",
-      password: "",
-      token: "",
-    },
-  ],
-  isAuth: false,
-  error: false,
-  book: DummyBookData,
-};
 
 //reducer function for handling all login,register,adding book,editbook,delete book,setting initialvalue
 const ReducerFunction = (
@@ -74,7 +61,7 @@ const ReducerFunction = (
             ele.password == (payload as UserDataProps).password
         );
       if (!findUserExist) {
-        toast.error("Invalid Email or Password");
+        toast.error("Invalid Email or Password / Create a new Account");
         state = {
           ...getRegister,
         };
@@ -93,7 +80,8 @@ const ReducerFunction = (
 
     //set initialValue in state
     case ReducerActionType.SETINITIALVALUE:
-      return initialValue;
+      state = initialValue;
+      return state;
 
     //Add book in state and localstorage
     case ReducerActionType.ADDBOOK:

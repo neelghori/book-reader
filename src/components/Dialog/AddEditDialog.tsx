@@ -58,6 +58,7 @@ const AddEditDialog: React.FC<AddEditDialogProps> = (props) => {
               type="number"
               id="publication_year"
               label="Publish Year"
+              min={0}
               max={2024}
               classnames="pr-2"
               value={values.publication_year}

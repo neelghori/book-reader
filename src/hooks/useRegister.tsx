@@ -28,7 +28,7 @@ const useLoginRegister = (isLogin: boolean) => {
         type: isLogin ? ReducerActionType.LOGIN : ReducerActionType.REGISTER,
         payload: values,
       });
-      resetForm();
+
       const getRegister = getLocalStorageData("bookData");
 
       const stateDuplicateForLogin = getRegister
@@ -40,9 +40,16 @@ const useLoginRegister = (isLogin: boolean) => {
         stateDuplicateForLogin.find(
           (ele) => ele.email == values.email && ele.password == values.password
         );
+      const findForEmail =
+        stateDuplicateForLogin &&
+        stateDuplicateForLogin.length > 0 &&
+        stateDuplicateForLogin.find((element) => element.email == values.email);
       if (isLogin && findUserExist) {
         setIsAuth(true);
+        resetForm();
         history.push("/");
+      } else if (!isLogin && !findForEmail) {
+        resetForm();
       }
     },
   });

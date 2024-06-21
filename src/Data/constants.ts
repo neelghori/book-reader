@@ -1,3 +1,5 @@
+import { InitialValueProps } from "../Types/Context/BookReducer";
+
 // Dummy data for book listing
 export const DummyBookData = [
   {
@@ -368,3 +370,17 @@ export const TableHeading = [
     value: "id",
   },
 ];
+
+export const initialValue: InitialValueProps = {
+  user_data: [
+    {
+      name: "",
+      email: "",
+      password: "",
+      token: "",
+    },
+  ],
+  isAuth: false,
+  error: false,
+  book: DummyBookData,
+};
