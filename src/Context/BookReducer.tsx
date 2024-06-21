@@ -113,7 +113,7 @@ const ReducerFunction = (
         });
         state = {
           ...state,
-          book: editbookData,
+          book: editbookData.sort((a, b) => b.id - a.id),
         };
         SetLocalStorage("bookData", state);
         return state;
@@ -127,7 +127,7 @@ const ReducerFunction = (
         ...state,
         book: DuplicatDeletebook.filter(
           (ele) => ele.id !== (payload as BookProps).id
-        ),
+        ).sort((a, b) => b.id - a.id),
       };
       SetLocalStorage("bookData", state);
       return state;
